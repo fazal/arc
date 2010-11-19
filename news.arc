@@ -10,7 +10,8 @@
 (= this-site*    "My Forum"
    site-url*     "http://news.yourdomain.com/"
    parent-url*   "http://www.yourdomain.com"
-   favicon-url*  ""
+   favicon-url*  "http://www.hackerstreet.in/arc.png"
+   blog-url*     "blog.hackerstreet.in"
    site-desc*    "What this site is about."               ; for rss feed
    site-color*   (color 180 180 180)
    border-color* (color 180 180 180)
@@ -431,8 +432,13 @@
                (color-stripe (main-color ,gu))
                (br)
                (center
+                 (fullbottom))
+               (center
                  (hook 'longfoot)
                  (admin-bar ,gu (- (msec) ,gt) ,whence)))))))
+                 
+(def fullbottom nil
+  (link "blog" "http://blog.hackerstreet.in"))
 
 (def admin-bar (user elapsed whence)
   (when (admin user)
