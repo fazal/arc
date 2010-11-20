@@ -10,7 +10,7 @@
 (= this-site*    "My Forum"
    site-url*     "http://news.yourdomain.com/"
    parent-url*   "http://www.yourdomain.com"
-   favicon-url*  "http://www.hackerstreet.in/arc.png"
+   favicon-url*  "arc.png"
    blog-url*     "blog.hackerstreet.in"
    site-desc*    "What this site is about."               ; for rss feed
    site-color*   (color 180 180 180)
@@ -443,7 +443,7 @@
 
 (def admin-bar (user elapsed whence)
   (when (admin user)
-    (br2)
+    (br)
     (w/bars
       (pr (len items*) "/" maxid* " loaded")
       (pr (round (/ (memory) 1000000)) " mb")
@@ -823,9 +823,16 @@ function vote(node) {
 (def resetpw-link ()
   (tostring (underlink "reset password" "resetpw")))
 
-(newsop welcome ()
-  (pr "Welcome to " this-site* ", " user "!"))
 
+
+(defop welcome req
+  (msgpage (get-user req) (+ "Welcome to HackerStreet.India " (get-user req) "!" "<p> This is an online forum for Indian Hackers and entreprenuers.Here you can talk about startups, cool hacks, get review for your startups/webapps and in general have a good intellectual discussions. But there are some guidlines for posting here so we can have enviornment which helps growth of a healthy community.<p> 1. There is only one condition on the theme, the content that you submit must have some connection to India (otherwise post it on <a href=news.ycombinator.com> HackerNews</a>. 
+<p> 2. Mind your language. Don't post offensive content.
+<p> 3. Act mature. Don't post comments like <i>dis is s00 k3wl</i>. English is a beatiful language.
+<br><br>") "Welcome to HackerStreet.India"))
+
+;(newsop welcome ()
+;  (pr "Welcome to " this-site* ", " user "!"))
 
 ; Main Operators
 
