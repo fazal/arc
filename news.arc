@@ -189,6 +189,10 @@
 (def acomment (i) (is i!type 'comment))
 (def apoll    (i) (is i!type 'poll))
 
+; To filter posts which have external URL links
+
+(def aask (i) (check i!url blank))
+
 (def load-item (id)
   (let i (temload 'item (+ storydir* id))
     (= (items* id) i)
@@ -608,7 +612,7 @@ function vote(node) {
       (tag (img src logo-url* width 18 height 18 
                 style "border:1px #@(hexrep border-color*) solid;")))))
 
-(= toplabels* '(nil "welcome" "new" "threads" "comments" "leaders" "*"))
+(= toplabels* '(nil "welcome" "new" "threads" "comments" "ask" "leaders" "*"))
 
 ; redefined later
 
@@ -622,6 +626,7 @@ function vote(node) {
     (when user
       (toplink "threads" (threads-url user) label))
     (toplink "comments" "newcomments" label)
+    (toplink "ask" "ask" label)
     (toplink "leaders"  "leaders"     label)
     (hook 'toprow user label)
     (link "submit")
@@ -880,6 +885,17 @@ function vote(node) {
 (def newstories (user n)
   (retrieve n [cansee user _] stories*))
 
+; Filter stories for the ask page
+
+(newsop ask ()  (askingpage user))
+
+(newscache askingpage user 40
+  (listpage user (msec) (askstories user maxend*) "ask" "Ask Links" "ask"))
+
+(def askstories (user n)
+  (retrieve n 
+            [and (aask _) (cansee user _)] 
+            stories*))
 
 (newsop best () (bestpage user))
 
